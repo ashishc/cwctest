@@ -29,6 +29,12 @@ var eqGraphParameter = `[{"band 1 - frequency": { "idInfo": {"deviceName":"Daphn
 {"band 5 - frequency": {"idInfo": {"deviceName":"Daphne-1", "path": "/Audio/User/HPF/Frequency"}, "format": "number"}},
 {"band 5 - enable": {"idInfo": {"deviceName":"Daphne-1", "path": "/Audio/User/HPF/Enable"}, "format": "norm"}},
 {"band 5 - active": {"idInfo": {"deviceName":"Daphne-1", "path": "/Audio/User/HPF/Active"}, "format": "norm"}}]`;
+// {"band 6 - enable": { "idInfo": {"deviceName":"Daphne-1", "path": "/Audio/User/TDC/Enable"}, "format": "norm"}},
+// {"band 6 - gain": {"idInfo": {"deviceName":"Daphne-1", "path": "/Audio/User/TDC/Level"}, "format": "number"}},
+// {"band 6 - active": {"idInfo": {"deviceName":"Daphne-1", "path": "/Audio/User/TDC/Active"}, "format": "number"}},
+// {"band 7 - enable": { "idInfo": {"deviceName":"Daphne-1", "path": "/Audio/User/ASC/Enable"}, "format": "norm"}},
+// {"band 7 - gain": {"idInfo": {"deviceName":"Daphne-1", "path": "/Audio/User/ASC/Level"}, "format": "number"}},
+// {"band 7 - active": {"idInfo": {"deviceName":"Daphne-1", "path": "/Audio/User/ASC/Active"}, "format": "norm"}}]`;
 
 var acGraphTDCParameter = `[{"band 1 - enable": { "idInfo": {"deviceName":"Daphne-1", "path": "/Audio/User/TDC/Enable"}, "format": "norm"}},
 {"band 1 - gain": {"idInfo": {"deviceName":"Daphne-1", "path": "/Audio/User/TDC/Level"}, "format": "number"}},
@@ -80,9 +86,12 @@ var buttonCustomParameterControl = '[{"idInfo":{"deviceName":"page 1", "path": "
 var textFieldCustomParameterControl = '[{"idInfo":{"deviceName":"page 1", "path": "page/site/web"},"format":"string"}]';
 // var eqGraphMainenableParameter = '[{"idInfo":{"deviceName":"Daphne-1", "path": "/Audio/User/PEQ/enable"}, "format": "norm"}]';
 var acGraphBandAsEQTDC = '[{"idInfo":{"deviceName":"Daphne-1", "path": "/Audio/User/PEQ/Band 1/Gain"}, "format": "string"}]';
-var acGraphTDCEnableParameter = '[{"idInfo":{"deviceName":"Daphne-1", "path": "/Audio/User/ASC/Enable"}, "format": "norm"}]';
+var acGraphASCEnableParameter = '[{"idInfo":{"deviceName":"Daphne-1", "path": "/Audio/User/ASC/Enable"}, "format": "norm"}]';
+var acGraphTDCEnableParameter = '[{"idInfo":{"deviceName":"Daphne-1", "path": "/Audio/User/TDC/Enable"}, "format": "norm"}]';
 var eqGraphLevelSpinnerParameterTDC = '[{"idInfo":{"deviceName":"Daphne-1", "path": "/Audio/User/TDC/Level"}}]';
 var eqGraphLevelSpinnerParameterASC = '[{"idInfo":{"deviceName":"Daphne-1", "path": "/Audio/User/ASC/Level"}}]';
+var acGraphBandAsActiveParameterTDC = '[{"idInfo":{"deviceName":"Daphne-1", "path": "/Audio/User/TDC/Active"}, "format": "norm"}]';
+var acGraphBandAsActiveParameterASC = '[{"idInfo":{"deviceName":"Daphne-1", "path": "/Audio/User/ASC/Active"}, "format": "norm"}]';
 
 document.onreadystatechange = function (e) {
 
@@ -332,11 +341,20 @@ window.onload = function () {
     document.getElementById('acControl').setAttribute('parameters', acGraphTDCParameter)
     document.getElementById('acGraphBandAsTDC').setAttribute("parameters", eqGraphLevelSpinnerParameterTDC);
     document.getElementById('acGraphBandAsASC').setAttribute("parameters", eqGraphLevelSpinnerParameterASC);
-    document.getElementById('enableACTDC').setAttribute("parameters", acGraphTDCEnableParameter);
+    document.getElementById('enableASC').setAttribute("parameters", acGraphASCEnableParameter);
+    document.getElementById('enableTDC').setAttribute("parameters", acGraphTDCEnableParameter);
+
+    document.getElementById('acGraphBandAsActiveTDC').setAttribute("parameters", acGraphBandAsActiveParameterTDC);
+    document.getElementById('acGraphBandAsActiveASC').setAttribute("parameters", acGraphBandAsActiveParameterASC);
 
     const btnElement = document.getElementById('configBtn');
     btnElement.setProperty('any', 'Configured Button', { 'key': 'text', 'elementType': 'attribute' });
     console.log(btnElement.getProperty(null, { 'key': 'text', 'elementType': 'attribute' }));
+
+    const eqGraphElement = document.getElementById('eqGraphControl');
+    console.log("Number of parameter bindings allowed for eq-graph control is",
+        eqGraphElement.getParameterSupported(), "the parameter names", eqGraphElement.getParameterNames());
+
     btnElement.setProperty('any', 'teal', { 'key': '--clx-button-background-color-on', 'elementType': 'css' });
     console.log(btnElement.getProperty(null, { 'key': '--clx-button-background-color-on', 'elementType': 'css' }));
 
@@ -562,31 +580,31 @@ function setCheckboxValue(controlName, attribute, webComponentControl) {
 
 }
 
-function getBrowserVersion(){
+function getBrowserVersion() {
 
-    var userAgent= navigator.userAgent, tem,
+    var userAgent = navigator.userAgent, tem,
 
-        matchTest= userAgent.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+        matchTest = userAgent.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
 
-    if(/trident/i.test(matchTest[1])){
+    if (/trident/i.test(matchTest[1])) {
 
-        tem=  /\brv[ :]+(\d+)/g.exec(userAgent) || [];
+        tem = /\brv[ :]+(\d+)/g.exec(userAgent) || [];
 
-        return 'IE '+(tem[1] || '');
-
-    }
-
-    if(matchTest[1]=== 'Chrome'){
-
-        tem= userAgent.match(/\b(OPR|Edge)\/(\d+)/);
-
-        if(tem!= null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+        return 'IE ' + (tem[1] || '');
 
     }
 
-    matchTest= matchTest[2]? [matchTest[1], matchTest[2]]: [navigator.appName, navigator.appVersion, '-?'];
+    if (matchTest[1] === 'Chrome') {
 
-    if((tem= userAgent.match(/version\/(\d+)/i))!= null) matchTest.splice(1, 1, tem[1]);
+        tem = userAgent.match(/\b(OPR|Edge)\/(\d+)/);
+
+        if (tem != null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+
+    }
+
+    matchTest = matchTest[2] ? [matchTest[1], matchTest[2]] : [navigator.appName, navigator.appVersion, '-?'];
+
+    if ((tem = userAgent.match(/version\/(\d+)/i)) != null) matchTest.splice(1, 1, tem[1]);
 
     return matchTest.join(' ');
 

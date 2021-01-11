@@ -120,13 +120,11 @@
                   </div>
                   <div>
                     <br /><br />
-
                     <h5>Spinner</h5>
-
-                    <!-- <div style="width:500px;height:32px" class="resize-div"> -->
-                    <clx-spinner id="spinnerControl">
-                    </clx-spinner>
-                    <!-- </div> -->
+                    <div style="width:500px;height:32px" class="resize-div">
+                      <clx-spinner id="spinnerControl">
+                      </clx-spinner>
+                    </div>
                     <div style="margin-top:10px;">
                       <h6>Spinner parameter:</h6>
                       <clx-textfield style="width:500px;" id="spinnerParameter"></clx-textfield>
@@ -283,8 +281,6 @@
                   </div>
                 </div>
               </div>
-
-              </div>
               <div class="col-md-4">
                 <div>
                   <div>
@@ -331,7 +327,7 @@
                   <div>
                     <h5>Toggle Button</h5>
                     <div style="width:77px;height:50px" class="resize-div">
-                      <clx-togglebutton id="togglebuttonControl" style="width:100%;height:100%">
+                      <clx-togglebutton id="togglebuttonControl" radius=7 style="width:100%;height:100%">
                       </clx-togglebutton>
                     </div>
                     <div style="margin-top:10px;">
@@ -341,43 +337,71 @@
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div style="margin-top:30px;" class="row">
+              <div class="col-8" style="height: 400px;display: block;">
+                <h5>Region</h5>
+                <div class="resize-div" id="region-resize"
+                  style="width:100px;height:100px; left: 400px;position: relative;overflow: visible;">
+                  <clx-region id="regionControl" mode="edit" style="width:100%;height:100%">
+                  </clx-region>
+                </div>
+                <div style="margin-top:10px;top: 268px;
+                                position: absolute;">
+                  <h6>Region parameter:</h6>
+                  <clx-textfield style="width:500px;" id="regionParameter"></clx-textfield>
+                </div>
+                <div style="margin-top:10px; top: 333px;
+                                position: absolute;">
+                  <h6>Region modes:</h6>
+                  <div style="display: flex; margin-bottom: 10px;">
+                    <clx-button text="Edit" style="width:50px; margin-right: 20px;" id="editBtn"></clx-button>
+                    <clx-button text="Display" style="width:60px;" id="displayBtn"></clx-button>
+                  </div>
+                  <script>
+                    document.querySelector("#editBtn").addEventListener("click", function () {
+
+                      regions.forEach(function (region) {
+                        region.setAttribute("mode", "edit");
+                        document.getElementById("region-resize").style.overflow = 'visible';
+                      });
+
+                    });
+
+                    document.querySelector("#displayBtn").addEventListener("click", function () {
+
+                      const regions = document.querySelectorAll("#regionControl");
+
+                      regions.forEach(function (region) {
+                        region.setAttribute("mode", "display");
+                        document.getElementById("region-resize").style.overflow = 'hidden';
+                      });
+
+                    });
+
+                  </script>
+                </div>
+              </div>
+              <div class="col-4">
+                <h5>Shapes</h5>
                 <div style="margin-top:30px;">
-                  <div style="width:500px;height:120px" class="resize-div">
+                  <div style="width:300px;height:120px" class="resize-div">
                     <clx-shape type="rect" style="width:100%;height:100%">
                     </clx-shape>
                   </div>
                 </div>
               </div>
             </div>
-            <div>
-              <h5>Array Calibration Graph</h5>
-              <clx-array-calibration-graph id="acControl" show-filter="false" bands=2 show-header="false" is-ac=true show-title=false>
-
-              </clx-array-calibration-graph>
-
-              <div style="width:150px;margin-top: -70px;"> TDC
-                <clx-spinner id="acGraphBandAsTDC" bumped = true width="100px" unit="dB" min="-16" max="16"></clx-spinner>
-              </div>
-              <div style="width:150px;"> ASC
-                <clx-spinner id="acGraphBandAsASC" bumped = true width="100px" unit="dB" min="-16" max="16"></clx-spinner>
-                <div style="width:150px;margin-top: 10px;">
-                  <clx-button style="width:100px;" id="enableACTDC" hint="ASC Enable" text="Enable ASC">
-                  </clx-button>
-                  <div style="margin-top:10px;">
-                    <h6 style="width:500px;">Band Read-Only:</h6>
-                    <clx-textfield style="width:500px;" id="acReadOnly"></clx-textfield>
-                  </div>
-                </div>
-              </div>
-
-            </div>
             <div style="margin-top:30px;" class="row">
               <div class="col-8">
                 <div>
                   <div>
                     <h5>EQ Graph</h5>
-                      <clx-eq-graph id="eqGraphControl" show-filter="true" enable-selection="true" initial-gain='0' band-label="All"  allow-delete=true allow-create-band-axis=false y-axis=[-24,24] initial-gain ="0" x-axis=[10,24000] frequency-range=[20,20000]>
-                      </clx-eq-graph>
+                    <clx-eq-graph id="eqGraphControl" show-filter="true" enable-selection="true" initial-gain='0'
+                    band-label="All" allow-delete=true show-band-arrows="true" band-icon-size="40"
+                    allow-create-band-axis=false y-axis=[-24,24] initial-gain="0" x-axis=[10,24000]
+                    frequency-range=[20,20000]>
                     <div style="margin-top:10px;margin-bottom: 10px;">
                       <h6>Eq Graph parameter:</h6>
                       <clx-textfield style="width:950px;" id="eqGraphParameter"></clx-textfield>
@@ -458,15 +482,15 @@
                     <option value="Variable High Shelf">High Shelf</option>
                   </select>
                 </div>
-                 <div style="margin-top: 20px; margin-bottom: 20px">
-                    <label for="filterType">Slope:</label>
-                    <select id="filterType">
-                      <option value="6.0" selected>6dB/Oct</option>
-                      <option value="9.0">9dB/Oct</option>
-                      <option value="12.0">12dB/Oct</option>
-                      <option value="15.0">15dB/Oct</option>
-                    </select>
-                  </div> -->
+                <div style="margin-top: 20px; margin-bottom: 20px">
+                  <label for="filterType">Slope:</label>
+                  <select id="filterType">
+                    <option value="6.0" selected>6dB/Oct</option>
+                    <option value="9.0">9dB/Oct</option>
+                    <option value="12.0">12dB/Oct</option>
+                    <option value="15.0">15dB/Oct</option>
+                  </select>
+                </div>
                 <div style="margin-top: 20px; margin-bottom: 20px">
                   <label for="bandLabel">Band Label:</label>
                   <select id="bandLabel">
@@ -518,6 +542,57 @@
                   <clx-textfield style="width:500px;" id="eqGraphBandGroupInfo"></clx-textfield>
                   <br><small>Press enter to set the group information to the band.</small>
                 </div>
+              </div>
+            </div>
+            <div style="margin-top:30px;" class="row">
+              <div class="col-12">
+                <h5>Array Calibration Graph</h5>
+                <div class="row">
+                  <clx-array-calibration-graph allow-create-band-axis="false" id="acControl" show-filter="false" bands=2
+                    show-header="false" is-ac=true show-title=false>
+                  </clx-array-calibration-graph>
+                </div>
+                <fieldset class="eq-graph-band">
+                  <legend class="eq-graph-band">Array Calibration Fields:</legend>
+                  <div class="row">
+                    <div class="col-2">
+                      <div class="row" style="width:150px"> TDC
+                        <clx-spinner id="acGraphBandAsTDC" bumped=true unit="dB" min="-16" max="16">
+                        </clx-spinner>
+                      </div>
+                      <div class="row mt-2">
+                        <clx-togglebutton id="acGraphBandAsActiveTDC"></clx-togglebutton>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <div class="row" style="width:150px"> ASC
+                        <clx-spinner id="acGraphBandAsASC" bumped=true unit="dB" min="-16" max="16">
+                        </clx-spinner>
+                      </div>
+                      <div class="row mt-2">
+                        <clx-togglebutton id="acGraphBandAsActiveASC"></clx-togglebutton>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <div style="margin-top: 20px;">
+                        <div class="row">
+                          <clx-button style="width:100px;" id="enableASC" hint="ASC Enable" text="Enable ASC">
+                          </clx-button>
+                        </div>
+                        <div class="row mt-2">
+                          <clx-button style="width:100px;" id="enableTDC" hint="TDC Enable" text="Enable TDC">
+                          </clx-button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div style="width:150px">
+                        <h6>Band Read-Only:</h6>
+                        <clx-textfield style="width:300px;" id="acReadOnly"></clx-textfield>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
               </div>
             </div>
             <div style="margin-top:30px;" class="row">
@@ -578,554 +653,515 @@
               </div>
             </div>
 
-            <div style="margin-top:30px;" class="row">
-              <div class="col-12 main-section" style="height: 400px;display: block;">
-                <h5>Region</h5>
-                <div class="resize-div" id="region-resize" style="width:100px;height:100px; left: 400px;position: relative;">
-                  <clx-region id="regionControl" mode="edit" style="width:100%;height:100%">
-                  </clx-region>
+          </div>
+          <div id="button" class="content-section">
+            <div class="header-section">
+              <div>
+                <span class="feature-title">Button</span>
+                <span>The button is an extension to HTML <code>&lt;button&gt;</code> element that represents a clickable
+                  button,
+                  which can be used in forms or anywhere in a document with icon, theming and HControl functionality.
+                </span>
+              </div>
+            </div>
+            <div class="main-section">
+              <div class="row" style="margin-bottom: 10px;">
+                <div class="col-3">
+                  <label for="themeControl" style="margin: 10px;">Control level theme: </label>
+                  <select id="themeControl" onchange="onThemeChange()">
+                    <option value="Empty">Empty</option>
+                    <option value="None">None</option>
+                    <option value="Dark">Dark</option>
+                    <option value="Light">Light</option>
+                  </select>
                 </div>
-                <div style="margin-top:10px;top: 268px;
-                            position: absolute;">
-                  <h6>region parameter:</h6>
-                  <clx-textfield style="width:500px;" id="regionParameter"></clx-textfield>
-                </div>
-                <div style="margin-top:10px; top: 333px;
-                            position: absolute;">
-                  <h6>region modes:</h6>
-                  <div style="display: flex; margin-bottom: 10px;">
-                    <clx-button text="Edit" style="width:50px; margin-right: 20px;" id="editBtn"></clx-button>
-                    <clx-button text="Display" style="width:60px;" id="displayBtn"></clx-button>
-                  </div>
-              
-                  <script>
-                    document.querySelector("#editBtn").addEventListener("click", function () {
-
-                      regions.forEach(function (region) {
-                        region.setAttribute("mode", "edit");
-                    });
-
-                    });
-
-                    document.querySelector("#displayBtn").addEventListener("click", function () {
-
-                      const regions = document.querySelectorAll("#regionControl");
-
-                      regions.forEach(function (region) {
-                        region.setAttribute("mode", "display");
-                      });
-
-                    });
-
-                  </script>
+                <div class="col-9">
+                  <label for="themeControl" style="margin: 10px;">Designer Properties: </label>
+                  <input type="radio" name="property" value="green" onclick="onPropertyChange('green')" /> Green
+                  <input type="radio" name="property" value="red" onclick="onPropertyChange('red')" /> Red
+                  <input type="radio" name="property" value="yellow" onclick="onPropertyChange('yellow')" /> Yellow
                 </div>
               </div>
-              <div>
-            </div>
-        </div>
-      </div>
-      <div id="button" class="content-section">
-        <div class="header-section">
-          <div>
-            <span class="feature-title">Button</span>
-            <span>The button is an extension to HTML <code>&lt;button&gt;</code> element that represents a clickable
-              button,
-              which can be used in forms or anywhere in a document with icon, theming and HControl functionality.
-            </span>
-          </div>
-        </div>
-        <div class="main-section">
-          <div class="row" style="margin-bottom: 10px;">
-            <div class="col-3">
-              <label for="themeControl" style="margin: 10px;">Control level theme: </label>
-              <select id="themeControl" onchange="onThemeChange()">
-                <option value="Empty">Empty</option>
-                <option value="None">None</option>
-                <option value="Dark">Dark</option>
-                <option value="Light">Light</option>
-              </select>
-            </div>
-            <div class="col-9">
-              <label for="themeControl" style="margin: 10px;">Designer Properties: </label>
-              <input type="radio" name="property" value="green" onclick="onPropertyChange('green')" /> Green
-              <input type="radio" name="property" value="red" onclick="onPropertyChange('red')" /> Red
-              <input type="radio" name="property" value="yellow" onclick="onPropertyChange('yellow')" /> Yellow
-            </div>
-          </div>
-          <div class="row">
-            <clx-button id="normalBtn" hint="Normal Button" text="Normal Button">
-            </clx-button>&nbsp;
-            <clx-button icon="fa fa-square" text="Icon Button">
-            </clx-button>&nbsp;
-            <clx-button shadow="true" text="Shadow Button">
-            </clx-button>&nbsp;
-            <clx-button rounded="true" text="Rounded Button">
-            </clx-button>&nbsp;
-            <clx-button disabled="true" text="Disabled Button">
-            </clx-button>&nbsp;
-            <clx-button id="configBtn">
-            </clx-button>&nbsp;
-          </div>
-          <script>
+              <div class="row">
+                <clx-button id="normalBtn" hint="Normal Button" text="Normal Button">
+                </clx-button>&nbsp;
+                <clx-button icon="fa fa-square" text="Icon Button">
+                </clx-button>&nbsp;
+                <clx-button shadow="true" text="Shadow Button">
+                </clx-button>&nbsp;
+                <clx-button rounded="true" text="Rounded Button">
+                </clx-button>&nbsp;
+                <clx-button disabled="true" text="Disabled Button">
+                </clx-button>&nbsp;
+                <clx-button id="configBtn">
+                </clx-button>&nbsp;
+              </div>
+              <script>
 
-            function onThemeChange() {
-              var x = document.getElementById("themeControl");
-              console.log("Theme changed!", x.value);
-              const button = document.querySelector("clx-button");
+                function onThemeChange() {
+                  var x = document.getElementById("themeControl");
+                  console.log("Theme changed!", x.value);
+                  const button = document.querySelector("clx-button");
 
-              if (x.value !== "Empty") {
-                button.setAttribute("theme", x.value);
-              } else {
+                  if (x.value !== "Empty") {
+                    button.setAttribute("theme", x.value);
+                  } else {
 
-                const theme = document.querySelector("#tgr-style-component");
-                if (theme) {
-                  var test = theme.selectedOptions[0].value;
-                  button.setAttribute("theme", test);
+                    const theme = document.querySelector("#tgr-style-component");
+                    if (theme) {
+                      var test = theme.selectedOptions[0].value;
+                      button.setAttribute("theme", test);
+                    }
+                    button.removeAttribute("properties");
+
+                  }
+
+                  const radios = document.querySelectorAll("input[type=radio]");
+                  radios.forEach(function (radio) {
+                    radio.checked = false;
+                    radio.disabled = x.value == "None" || x.value == "Empty";
+
+                  });
+
                 }
-                button.removeAttribute("properties");
 
-              }
+                function onPropertyChange(value) {
 
-              const radios = document.querySelectorAll("input[type=radio]");
-              radios.forEach(function (radio) {
-                radio.checked = false;
-                radio.disabled = x.value == "None" || x.value == "Empty";
+                  const test = '{"main-color": "' + value + '"}';
+                  console.log("Property changed!", test);
+                  const button = document.querySelector("clx-button");
 
-              });
+                  button.setAttribute("properties", test);
 
-            }
+                }
 
-            function onPropertyChange(value) {
-
-              const test = '{"main-color": "' + value + '"}';
-              console.log("Property changed!", test);
-              const button = document.querySelector("clx-button");
-
-              button.setAttribute("properties", test);
-
-            }
-
-          </script>
-        </div>
-        <div class="documentation">
-          <h2>Documentation</h2>
-          <div>
-            <h4>Implementation</h4>
-            <pre
-              class="language-markup"><code>&lt;clx-button disabled="true" text="Disabled Button"&gt;&lt;/clx-button&gt;</code></pre>
-            <pre
-              class="language-markup"><code>&lt;clx-button hint="Normal Button" text="Normal Button"&gt;&lt;/clx-button&gt;</code></pre>
-            <pre
-              class="language-markup"><code>&lt;clx-button icon="fa fa-square" text="Icon Button"&gt;&lt;/clx-button&gt;</code></pre>
-            <pre
-              class="language-markup"><code>&lt;clx-button shadow="true" text="Shadow Button"&gt;&lt;/clx-button&gt;</code></pre>
-            <pre
-              class="language-markup"><code>&lt;clx-button rounded="true" text="Rounded Button"&gt;&lt;/clx-button&gt;</code></pre>
-          </div>
-        </div>
-      </div>
-      <div id="checkbox" class="content-section">
-        <div class="header-section">
-          <span class="feature-title">Checkbox</span>
-          <span>The Checkbox is an extension to HTML <code>&lt;input&gt;</code> element type="checkbox" with theming
-            and HControl
-            functionality. </span>
-        </div>
-        <div class="main-section">
-          <clx-checkbox id="checkbox1" text="Checkbox 1">
-          </clx-checkbox>
-          <clx-checkbox id="checkbox2" checked="true" text="Checkbox checked">
-          </clx-checkbox>
-        </div>
-        <div class="documentation">
-          <h2>Documentation</h2>
-          <div>
-            <h4>Implementation</h4>
-            <pre class="language-markup"><code>&lt;clx-checkbox text="Checkbox 1"&gt;&lt;/clx-checkbox&gt;</code></pre>
-            <pre
-              class="language-markup"><code>&lt;clx-checkbox checked="true" text="Checkbox checked"&gt;&lt;/clx-checkbox&gt;</code></pre>
-          </div>
-        </div>
-      </div>
-      <div id="dropdownlist" class="content-section">
-        <div class="header-section">
-          <span class="feature-title">Dropdownlist</span>
-          <span>The Checkbox is an extension to HTML <code>&lt;select&gt;</code> element with theming
-            and HControl functionality. </span>
-        </div>
-        <div class="main-section">
-          <div class="row">
-            <clx-dropdownlist>
-            </clx-dropdownlist>
-          </div>
-          <script>
-            var options = '[{"label":"Mango", "value":"1"}, {"label":"Apple", "value":"2"}]';
-
-            const dropdownlists = document.querySelectorAll("clx-dropdownlist");
-            dropdownlists.forEach(function (dropDown) {
-              dropDown.setAttribute("items", options);
-            });
-
-          </script>
-        </div>
-        <div class="documentation">
-          <h2>Documentation</h2>
-          <div>
-            <h4>Implementation</h4>
-            <pre
-              class="language-markup"><code>&lt;clx-dropdownlist items="[{"label":"Mango", "value":"1"}, {"label":"Apple", "value":"2"}]"&gt;&lt;/clx-dropdownlist&gt;</code></pre>
-          </div>
-        </div>
-      </div>
-      <div id="EqGraph" class="content-section">
-
-        <div class=" header-section">
-          <span class="feature-title">Eq Graph</span>
-          <span>The Eq Graph is a svg element that represents a clickable
-            Eq Graph, which can be used in forms, theming and HControl functionality.
-          </span>
-        </div>
-        <div class="main-section">
-          <div class="row">
-            <clx-eq-graph dimensions = [1080,500] allow-delete=true allow-create-band-axis=false y-axis=[-24,24] initial-gain ="0" x-axis=[10,24000] frequency-range=[20,20000]>
-            </clx-eq-graph>
-          </div>
-        </div>
-        <div class="documentation">
-          <h2>Documentation</h2>
-          <div>
-            <h4>Implementation</h4>
-            <pre
-              class="language-markup"><code>&lt;clx-eq-graph show-filter="true" band-label="Frequency"&gt;&lt;/clx-eq-graph&gt;</code></pre>
-          </div>
-        </div>
-      </div>
-      <div id="fader" class="content-section">
-        <div class="header-section">
-          <span class="feature-title">Fader</span>
-          <span>The Fader is a SVG element with theming and HControl functionality. </span>
-        </div>
-        <div class="main-section">
-          <clx-fader id="horizontalFader" orientation="Horizontal"></clx-fader>
-          <clx-fader id="verticalFader" orientation="Vertical" min="0" max="100" show-scale="true"
-            scale-position="Both">
-          </clx-fader>
-        </div>
-        <div class="documentation">
-          <h2>Documentation</h2>
-          <div>
-            <h4>Implementation</h4>
-            <pre
-              class="language-markup"><code>&lt;clx-fader  orientation="Horizontal" &gt;&lt;/clx-fader&gt;</code></pre>
-            <pre class="language-markup"><code>&lt;clx-fader orientation="Vertical" &gt;&lt;/clx-fader&gt;</code></pre>
-          </div>
-        </div>
-      </div>
-      <div id="label" class="content-section">
-        <div class="header-section">
-          <span class="feature-title">Label</span>
-          <span>The label is an extension to HTML <code>&lt;label&gt;</code> element with theming and Hypertext link
-            functionality.
-          </span>
-        </div>
-        <div class="main-section">
-          <clx-label text="Label 1"></clx-label>
-          <clx-label link="#fader" text="Link Label"></clx-label>
-        </div>
-        <div class="documentation">
-          <h2>Documentation</h2>
-          <div>
-            <h4>Implementation</h4>
-            <pre
-              class="language-markup"><code class="language-markup">&lt;clx-label text="Label 1"&gt;&lt;/clx-label&gt;</code></pre>
-            <pre
-              class="language-markup"><code class="language-markup">&lt;clx-label  link="#fader" text="Link Label"&gt;&lt;/clx-label&gt;</code></pre>
-          </div>
-        </div>
-      </div>
-      <div id="led" class="content-section">
-        <div class="header-section">
-          <span class="feature-title">LED Indicator</span>
-          <span>The LED Indicator is a SVG element with theming and HControl functionality. </span>
-        </div>
-        <div class="main-section">
-          <clx-led on-state="true" value="50"></clx-led>
-        </div>
-        <div class="documentation">
-          <h2>Documentation</h2>
-          <div>
-            <h4>Implementation</h4>
-            <pre class="language-markup"><code>&lt;clx-led  on-state="true" value="50" &gt;&lt;/clx-led&gt;</code></pre>
-          </div>
-        </div>
-      </div>
-      <div id="meter" class="content-section">
-        <div class="header-section">
-          <span class="feature-title">Meter</span>
-          <span>The Meter is a SVG element with theming and HControl functionality. </span>
-        </div>
-        <div class="main-section">
-          <clx-meter id="horizontalMeter" orientation="Horizontal" stepped="false" min="0" max="100" value="30">
-          </clx-meter>
-          <clx-meter id="horizontalSteppedMeter" orientation="Horizontal"></clx-meter>
-          <clx-meter orientation="Vertical" min="0" max="100" show-scale="true" scale-position="Both"></clx-meter>
-        </div>
-        <div class="documentation">
-          <h2>Documentation</h2>
-          <div>
-            <h4>Implementation</h4>
-            <pre
-              class="language-markup"><code>&lt;clx-meter  orientation="Horizontal" stepped="false" &gt;&lt;/clx-meter&gt;</code></pre>
-            <pre
-              class="language-markup"><code>&lt;clx-meter  orientation="Horizontal" &gt;&lt;/clx-meter&gt;</code></pre>
-            <pre
-              class="language-markup"><code>&lt;clx-meter  orientation="Vertical"  min="0" max="100" show-scale="true" scale-position="Both"&gt;&lt;/clx-meter&gt;</code></pre>
-          </div>
-        </div>
-      </div>
-      <div id="radiobutton" class="content-section">
-        <div class="header-section">
-          <span class="feature-title">RadioButton</span>
-          <span>The radio button is an extension to HTML <code>&lt;input&gt;</code> element type "radio" with
-            theming
-            and
-            HControl
-            functionality. </span>
-        </div>
-        <div class="main-section">
-          <h5>Single</h5>
-          <clx-radiobutton value="1" text="RadioButton">
-          </clx-radiobutton>
-          <h5>Group</h5>
-          <clx-radiobutton value="0" name="contact" text="Male">
-          </clx-radiobutton>
-          <clx-radiobutton value="1" name="contact" text="Female">
-          </clx-radiobutton>
-        </div>
-        <div class="documentation">
-          <h2>Documentation</h2>
-          <div>
-            <h4>Implementation</h4>
-            <pre
-              class="language-markup"><code>&lt;clx-radiobutton value="1" text="RadioButton"&gt;&lt;/clx-radiobutton&gt;</code></pre>
-            <pre
-              class="language-markup"><code>&lt;clx-radiobutton value="1" name="contact" text="Male"&gt;&lt;/clx-radiobutton&gt;</code></pre>
-            <pre
-              class="language-markup"><code>&lt;clx-radiobutton value="2" name="contact" text="Female"&gt;&lt;/clx-radiobutton&gt;</code></pre>
-          </div>
-        </div>
-      </div>
-      <div id="rotary" class="content-section">
-        <div class="header-section">
-          <span class="feature-title">Rotary</span>
-          <span>The Rotary is a SVG element with theming and HControl functionality. </span>
-        </div>
-        <div class="main-section">
-          <clx-rotary min="0" max="100"></clx-rotary>
-          <clx-rotary min="0" max="100" show-scale="false" fill="true"></clx-rotary>
-        </div>
-        <div class="documentation">
-          <h2>Documentation</h2>
-          <div>
-            <h4>Implementation</h4>
-            <pre class="language-markup"><code>&lt;clx-rotary min="0" max="100"&gt;&lt;/clx-rotary&gt;</code></pre>
-            <pre
-              class="language-markup"><code>&lt;clx-rotary min="0" max="100" fill="true" show-scale="true" &gt;&lt;/clx-rotary&gt;</code></pre>
-          </div>
-        </div>
-      </div>
-      <div id="shape" class="content-section">
-        <div class="header-section">
-          <span class="feature-title">Shapes</span>
-          <span>The shape is an extension to HTML <code>&lt;div&gt;</code> element with theming functionality.
-          </span>
-        </div>
-        <div class="main-section">
-          <div class="row">
-            <clx-shape width="100px" type="circle"></clx-shape>
-            <div style="margin-right: 5px;">
-              <clx-shape width="200px" type="rect"></clx-shape>
+              </script>
             </div>
-            <clx-shape width="100px" type="square"></clx-shape>
-            <div style="margin-left: 5px;">
-              <clx-shape width="300px" type="line"></clx-shape>
+            <div class="documentation">
+              <h2>Documentation</h2>
+              <div>
+                <h4>Implementation</h4>
+                <pre
+                  class="language-markup"><code>&lt;clx-button disabled="true" text="Disabled Button"&gt;&lt;/clx-button&gt;</code></pre>
+                <pre
+                  class="language-markup"><code>&lt;clx-button hint="Normal Button" text="Normal Button"&gt;&lt;/clx-button&gt;</code></pre>
+                <pre
+                  class="language-markup"><code>&lt;clx-button icon="fa fa-square" text="Icon Button"&gt;&lt;/clx-button&gt;</code></pre>
+                <pre
+                  class="language-markup"><code>&lt;clx-button shadow="true" text="Shadow Button"&gt;&lt;/clx-button&gt;</code></pre>
+                <pre
+                  class="language-markup"><code>&lt;clx-button rounded="true" text="Rounded Button"&gt;&lt;/clx-button&gt;</code></pre>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="documentation">
-          <h2>Documentation</h2>
-          <div>
-            <h4>Implementation</h4>
-            <pre
-              class="language-markup"><code>&lt;clx-shape width="100px" type="circle"&gt;&lt;/clx-shape&gt;</code></pre>
-            <pre
-              class="language-markup"><code>&lt;clx-shape width="200px" type="rect"&gt;&lt;/clx-shape&gt;</code></pre>
-            <pre
-              class="language-markup"><code>&lt;clx-shape width="100px" type="square"&gt;&lt;/clx-shape&gt;</code></pre>
-            <pre
-              class="language-markup"><code>&lt;clx-shape width="300px" type="line"&gt;&lt;/clx-shape&gt;</code></pre>
+          <div id="checkbox" class="content-section">
+            <div class="header-section">
+              <span class="feature-title">Checkbox</span>
+              <span>The Checkbox is an extension to HTML <code>&lt;input&gt;</code> element type="checkbox" with theming
+                and HControl
+                functionality. </span>
+            </div>
+            <div class="main-section">
+              <clx-checkbox id="checkbox1" text="Checkbox 1">
+              </clx-checkbox>
+              <clx-checkbox id="checkbox2" checked="true" text="Checkbox checked">
+              </clx-checkbox>
+            </div>
+            <div class="documentation">
+              <h2>Documentation</h2>
+              <div>
+                <h4>Implementation</h4>
+                <pre
+                  class="language-markup"><code>&lt;clx-checkbox text="Checkbox 1"&gt;&lt;/clx-checkbox&gt;</code></pre>
+                <pre
+                  class="language-markup"><code>&lt;clx-checkbox checked="true" text="Checkbox checked"&gt;&lt;/clx-checkbox&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+          <div id="dropdownlist" class="content-section">
+            <div class="header-section">
+              <span class="feature-title">Dropdownlist</span>
+              <span>The Checkbox is an extension to HTML <code>&lt;select&gt;</code> element with theming
+                and HControl functionality. </span>
+            </div>
+            <div class="main-section">
+              <div class="row">
+                <clx-dropdownlist>
+                </clx-dropdownlist>
+              </div>
+              <script>
+                var options = '[{"label":"Mango", "value":"1"}, {"label":"Apple", "value":"2"}]';
+
+                const dropdownlists = document.querySelectorAll("clx-dropdownlist");
+                dropdownlists.forEach(function (dropDown) {
+                  dropDown.setAttribute("items", options);
+                });
+
+              </script>
+            </div>
+            <div class="documentation">
+              <h2>Documentation</h2>
+              <div>
+                <h4>Implementation</h4>
+                <pre
+                  class="language-markup"><code>&lt;clx-dropdownlist items="[{"label":"Mango", "value":"1"}, {"label":"Apple", "value":"2"}]"&gt;&lt;/clx-dropdownlist&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+          <div id="EqGraph" class="content-section">
+
+            <div class=" header-section">
+              <span class="feature-title">Eq Graph</span>
+              <span>The Eq Graph is a svg element that represents a clickable
+                Eq Graph, which can be used in forms, theming and HControl functionality.
+              </span>
+            </div>
+            <div class="main-section">
+              <div class="row">
+                <clx-eq-graph dimensions=[1080,500] allow-delete=true allow-create-band-axis=false y-axis=[-24,24]
+                  initial-gain="0" x-axis=[10,24000] frequency-range=[20,20000]>
+                </clx-eq-graph>
+              </div>
+            </div>
+            <div class="documentation">
+              <h2>Documentation</h2>
+              <div>
+                <h4>Implementation</h4>
+                <pre
+                  class="language-markup"><code>&lt;clx-eq-graph show-filter="true" band-label="Frequency"&gt;&lt;/clx-eq-graph&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+          <div id="fader" class="content-section">
+            <div class="header-section">
+              <span class="feature-title">Fader</span>
+              <span>The Fader is a SVG element with theming and HControl functionality. </span>
+            </div>
+            <div class="main-section">
+              <clx-fader id="horizontalFader" orientation="Horizontal"></clx-fader>
+              <clx-fader id="verticalFader" orientation="Vertical" min="0" max="100" show-scale="true"
+                scale-position="Both">
+              </clx-fader>
+            </div>
+            <div class="documentation">
+              <h2>Documentation</h2>
+              <div>
+                <h4>Implementation</h4>
+                <pre
+                  class="language-markup"><code>&lt;clx-fader  orientation="Horizontal" &gt;&lt;/clx-fader&gt;</code></pre>
+                <pre
+                  class="language-markup"><code>&lt;clx-fader orientation="Vertical" &gt;&lt;/clx-fader&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+          <div id="label" class="content-section">
+            <div class="header-section">
+              <span class="feature-title">Label</span>
+              <span>The label is an extension to HTML <code>&lt;label&gt;</code> element with theming and Hypertext link
+                functionality.
+              </span>
+            </div>
+            <div class="main-section">
+              <clx-label text="Label 1"></clx-label>
+              <clx-label link="#fader" text="Link Label"></clx-label>
+            </div>
+            <div class="documentation">
+              <h2>Documentation</h2>
+              <div>
+                <h4>Implementation</h4>
+                <pre
+                  class="language-markup"><code class="language-markup">&lt;clx-label text="Label 1"&gt;&lt;/clx-label&gt;</code></pre>
+                <pre
+                  class="language-markup"><code class="language-markup">&lt;clx-label  link="#fader" text="Link Label"&gt;&lt;/clx-label&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+          <div id="led" class="content-section">
+            <div class="header-section">
+              <span class="feature-title">LED Indicator</span>
+              <span>The LED Indicator is a SVG element with theming and HControl functionality. </span>
+            </div>
+            <div class="main-section">
+              <clx-led on-state="true" value="50"></clx-led>
+            </div>
+            <div class="documentation">
+              <h2>Documentation</h2>
+              <div>
+                <h4>Implementation</h4>
+                <pre
+                  class="language-markup"><code>&lt;clx-led  on-state="true" value="50" &gt;&lt;/clx-led&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+          <div id="meter" class="content-section">
+            <div class="header-section">
+              <span class="feature-title">Meter</span>
+              <span>The Meter is a SVG element with theming and HControl functionality. </span>
+            </div>
+            <div class="main-section">
+              <clx-meter id="horizontalMeter" orientation="Horizontal" stepped="false" min="0" max="100" value="30">
+              </clx-meter>
+              <clx-meter id="horizontalSteppedMeter" orientation="Horizontal"></clx-meter>
+              <clx-meter orientation="Vertical" min="0" max="100" show-scale="true" scale-position="Both"></clx-meter>
+            </div>
+            <div class="documentation">
+              <h2>Documentation</h2>
+              <div>
+                <h4>Implementation</h4>
+                <pre
+                  class="language-markup"><code>&lt;clx-meter  orientation="Horizontal" stepped="false" &gt;&lt;/clx-meter&gt;</code></pre>
+                <pre
+                  class="language-markup"><code>&lt;clx-meter  orientation="Horizontal" &gt;&lt;/clx-meter&gt;</code></pre>
+                <pre
+                  class="language-markup"><code>&lt;clx-meter  orientation="Vertical"  min="0" max="100" show-scale="true" scale-position="Both"&gt;&lt;/clx-meter&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+          <div id="radiobutton" class="content-section">
+            <div class="header-section">
+              <span class="feature-title">RadioButton</span>
+              <span>The radio button is an extension to HTML <code>&lt;input&gt;</code> element type "radio" with
+                theming
+                and
+                HControl
+                functionality. </span>
+            </div>
+            <div class="main-section">
+              <h5>Single</h5>
+              <clx-radiobutton value="1" text="RadioButton">
+              </clx-radiobutton>
+              <h5>Group</h5>
+              <clx-radiobutton value="0" name="contact" text="Male">
+              </clx-radiobutton>
+              <clx-radiobutton value="1" name="contact" text="Female">
+              </clx-radiobutton>
+            </div>
+            <div class="documentation">
+              <h2>Documentation</h2>
+              <div>
+                <h4>Implementation</h4>
+                <pre
+                  class="language-markup"><code>&lt;clx-radiobutton value="1" text="RadioButton"&gt;&lt;/clx-radiobutton&gt;</code></pre>
+                <pre
+                  class="language-markup"><code>&lt;clx-radiobutton value="1" name="contact" text="Male"&gt;&lt;/clx-radiobutton&gt;</code></pre>
+                <pre
+                  class="language-markup"><code>&lt;clx-radiobutton value="2" name="contact" text="Female"&gt;&lt;/clx-radiobutton&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+          <div id="rotary" class="content-section">
+            <div class="header-section">
+              <span class="feature-title">Rotary</span>
+              <span>The Rotary is a SVG element with theming and HControl functionality. </span>
+            </div>
+            <div class="main-section">
+              <clx-rotary min="0" max="100"></clx-rotary>
+              <clx-rotary min="0" max="100" show-scale="false" fill="true"></clx-rotary>
+            </div>
+            <div class="documentation">
+              <h2>Documentation</h2>
+              <div>
+                <h4>Implementation</h4>
+                <pre class="language-markup"><code>&lt;clx-rotary min="0" max="100"&gt;&lt;/clx-rotary&gt;</code></pre>
+                <pre
+                  class="language-markup"><code>&lt;clx-rotary min="0" max="100" fill="true" show-scale="true" &gt;&lt;/clx-rotary&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+          <div id="shape" class="content-section">
+            <div class="header-section">
+              <span class="feature-title">Shapes</span>
+              <span>The shape is an extension to HTML <code>&lt;div&gt;</code> element with theming functionality.
+              </span>
+            </div>
+            <div class="main-section">
+              <div class="row">
+                <clx-shape width="100px" type="circle"></clx-shape>
+                <div style="margin-right: 5px;">
+                  <clx-shape width="200px" type="rect"></clx-shape>
+                </div>
+                <clx-shape width="100px" type="square"></clx-shape>
+                <div style="margin-left: 5px;">
+                  <clx-shape width="300px" type="line"></clx-shape>
+                </div>
+              </div>
+            </div>
+            <div class="documentation">
+              <h2>Documentation</h2>
+              <div>
+                <h4>Implementation</h4>
+                <pre
+                  class="language-markup"><code>&lt;clx-shape width="100px" type="circle"&gt;&lt;/clx-shape&gt;</code></pre>
+                <pre
+                  class="language-markup"><code>&lt;clx-shape width="200px" type="rect"&gt;&lt;/clx-shape&gt;</code></pre>
+                <pre
+                  class="language-markup"><code>&lt;clx-shape width="100px" type="square"&gt;&lt;/clx-shape&gt;</code></pre>
+                <pre
+                  class="language-markup"><code>&lt;clx-shape width="300px" type="line"&gt;&lt;/clx-shape&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+          <div id="spinner" class="content-section">
+            <div class="header-section">
+              <span class="feature-title">Spinner</span>
+              <span>The Spinner is an extension to HTML <code>&lt;input&gt;</code> element with theming and HControl
+                functionality.</span>
+            </div>
+            <div class="main-section">
+              <clx-spinner unit="dB" min="-20" step="10" max="20"></clx-spinner>
+              <clx-spinner unit="Hz" min="20" max="20000"></clx-spinner>
+              <clx-spinner spinner-type="arrowupdown">
+              </clx-spinner>
+            </div>
+            <div class="documentation">
+              <h2>Documentation</h2>
+              <div>
+                <h4>Implementation</h4>
+                <pre
+                  class="language-markup"><code>&lt;clx-spinner unit="dB" min="-20" max="20" step="10"&gt;&lt;/clx-spinner&gt;</code></pre>
+                <pre
+                  class="language-markup"><code>&lt;clx-spinner unit="Hz" min="20" max="20000"&gt;&lt;/clx-spinner&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+          <div id="textfield" class="content-section">
+            <div class="header-section">
+              <span class="feature-title">Text Field</span>
+              <span>The textfield is an extension to HTML <code>&lt;input&gt;</code> element with theming and HControl
+                functionality. </span>
+            </div>
+            <div class="main-section">
+              <clx-textfield>
+              </clx-textfield>
+            </div>
+            <div class="documentation">
+              <h2>Documentation</h2>
+              <div>
+                <h4>Implementation</h4>
+                <pre
+                  class="language-markup"><code>&lt;clx-textfield value="Text Field"&gt;&lt;/clx-textfield&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div id="textfield" class="content-section">
+            <div class="header-section">
+              <span class="feature-title">Toggle Button</span>
+              <span>The toggle button is button that shows a binary value, as well as a mixed visual for multiple
+                selections</span>
+            </div>
+            <div class="main-section" style="display: inline-block;">
+              <clx-togglebutton id="togglebuttonControl0" mixed-state="true">
+              </clx-togglebutton>
+              <clx-togglebutton id="togglebuttonControl1" disabled="true">
+              </clx-togglebutton>
+              <clx-togglebutton id="togglebuttonControl2">
+              </clx-togglebutton>
+              <clx-togglebutton id="togglebuttonControl3" on-state="true">
+              </clx-togglebutton>
+              <clx-togglebutton id="togglebuttonControl4" on-state="false">
+              </clx-togglebutton>
+            </div>
+            <div class="documentation">
+              <h2>Documentation</h2>
+              <div>
+                <h4>Implementation</h4>
+                <pre
+                  class="language-markup"><code>&lt;clx-togglebutton mixed-state="true" &gt;&lt;/clx-togglebutton&gt;</code></pre>
+                <pre
+                  class="language-markup"><code>&lt;clx-togglebutton disabled="true" &gt;&lt;/clx-togglebutton&gt;</code></pre>
+                <pre class="language-markup"><code>&lt;clx-togglebutton &gt;&lt;/clx-togglebutton&gt;</code></pre>
+                <pre
+                  class="language-markup"><code>&lt;clx-togglebutton on-state="true" &gt;&lt;/clx-togglebutton&gt;</code></pre>
+                <pre
+                  class="language-markup"><code>&lt;clx-togglebutton on-state="false" &gt;&lt;/clx-togglebutton&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div id="textfield" class="content-section">
+            <div class="header-section">
+              <span class="feature-title">Region</span>
+              <span>The Region is a SVG element with theming and HControl functionality.</span>
+            </div>
+            <div class="main-section" style="display: inline-block;">
+              <div style="margin-bottom:10px;width:140px;height:140px;">
+                <clx-region id="region01">
+                </clx-region>
+              </div>
+              <div style="width:140px;height:140px;">
+                <clx-region id="region02" mode="edit">
+                </clx-region>
+              </div>
+              <script>
+                var vertexes = [{ x: 5, y: 5 }, { x: 96, y: 5 }, { x: 96, y: 96 }, { x: 5, y: 96 }];
+                const resizeRect = { x: 400, y: 0, width: 100, height: 100 };
+
+                const regions = document.querySelectorAll("clx-region");
+
+                regions.forEach(function (region) {
+
+                  region.setAttribute("points", JSON.stringify(vertexes));
+                  region.setAttribute("resize-rect", JSON.stringify(resizeRect));
+
+                });
+
+                document.querySelector("#regionControl").addEventListener("boundingBox", function (data) {
+
+                  document.getElementById("region-resize").style.left = data.detail.dimension.x + "px";
+                  document.getElementById("region-resize").style.top = data.detail.dimension.y + "px";
+                  document.getElementById("region-resize").style.width = (data.detail.dimension.width) + "px";
+                  document.getElementById("region-resize").style.height = (data.detail.dimension.height) + "px";
+
+                });
+
+              </script>
+            </div>
+            <div class="documentation">
+              <h2>Documentation</h2>
+              <div>
+                <h4>Implementation</h4>
+                <pre class="language-markup"><code>&lt;clx-region &gt;&lt;/clx-region&gt;</code></pre>
+                <pre class="language-markup"><code>&lt;clx-region mode="edit" &gt;&lt;/clx-region&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div id="image" class="content-section">
+            <div class=" header-section">
+              <span class="feature-title">Image</span>
+              <span>The image is an extension to HTML <code>&lt;img&gt;</code> element that represents a clickable
+                image, which can be used in forms, theming and no HControl functionality.
+              </span>
+            </div>
+
+            <div class="main-section">
+              <div class="row">
+                <clx-img source="assets/images/Harman+Primary+Logo+(Med)_thmb.jpg" alt="Harman Logo">
+                </clx-img>
+              </div>
+            </div>
+            <div class="documentation">
+              <h2>Documentation</h2>
+              <div>
+                <h4>Implementation</h4>
+                <pre
+                  class="language-markup"><code>&lt;clx-img source="assets/images/Harman+Primary+Logo+(Med)_thmb.jpg" alt="Harman Logo"&gt;&lt;/clx-img&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div id="image" class="content-section">
+            <div class=" header-section">
+              <span class="feature-title">BrowserVersion</span>
+              <span id="browserInfo">
+              </span>
+            </div>
+
           </div>
         </div>
-      </div>
-      <div id="spinner" class="content-section">
-        <div class="header-section">
-          <span class="feature-title">Spinner</span>
-          <span>The Spinner is an extension to HTML <code>&lt;input&gt;</code> element with theming and HControl
-            functionality.</span>
-        </div>
-        <div class="main-section">
-          <clx-spinner unit="dB" min="-20" step="10" max="20"></clx-spinner>
-          <clx-spinner unit="Hz" min="20" max="20000"></clx-spinner>
-        </div>
-        <div class="documentation">
-          <h2>Documentation</h2>
-          <div>
-            <h4>Implementation</h4>
-            <pre
-              class="language-markup"><code>&lt;clx-spinner unit="dB" min="-20" max="20" step="10"&gt;&lt;/clx-spinner&gt;</code></pre>
-            <pre
-              class="language-markup"><code>&lt;clx-spinner unit="Hz" min="20" max="20000"&gt;&lt;/clx-spinner&gt;</code></pre>
-          </div>
-        </div>
-      </div>
-      <div id="textfield" class="content-section">
-        <div class="header-section">
-          <span class="feature-title">Text Field</span>
-          <span>The textfield is an extension to HTML <code>&lt;input&gt;</code> element with theming and HControl
-            functionality. </span>
-        </div>
-        <div class="main-section">
-          <clx-textfield>
-          </clx-textfield>
-        </div>
-        <div class="documentation">
-          <h2>Documentation</h2>
-          <div>
-            <h4>Implementation</h4>
-            <pre
-              class="language-markup"><code>&lt;clx-textfield value="Text Field"&gt;&lt;/clx-textfield&gt;</code></pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="textfield" class="content-section">
-        <div class="header-section">
-          <span class="feature-title">Toggle Button</span>
-          <span>The toggle button is button that shows a binary value, as well as a mixed visual for multiple
-            selections</span>
-        </div>
-        <div class="main-section" style="display: inline-block;">
-          <clx-togglebutton id="togglebuttonControl0" mixed-state="true">
-          </clx-togglebutton>
-          <clx-togglebutton id="togglebuttonControl1" disabled="true">
-          </clx-togglebutton>
-          <clx-togglebutton id="togglebuttonControl2">
-          </clx-togglebutton>
-          <clx-togglebutton id="togglebuttonControl3" on-state="true">
-          </clx-togglebutton>
-          <clx-togglebutton id="togglebuttonControl4" on-state="false">
-          </clx-togglebutton>
-        </div>
-        <div class="documentation">
-          <h2>Documentation</h2>
-          <div>
-            <h4>Implementation</h4>
-            <pre
-              class="language-markup"><code>&lt;clx-togglebutton mixed-state="true" &gt;&lt;/clx-togglebutton&gt;</code></pre>
-            <pre
-              class="language-markup"><code>&lt;clx-togglebutton disabled="true" &gt;&lt;/clx-togglebutton&gt;</code></pre>
-            <pre class="language-markup"><code>&lt;clx-togglebutton &gt;&lt;/clx-togglebutton&gt;</code></pre>
-            <pre
-              class="language-markup"><code>&lt;clx-togglebutton on-state="true" &gt;&lt;/clx-togglebutton&gt;</code></pre>
-            <pre
-              class="language-markup"><code>&lt;clx-togglebutton on-state="false" &gt;&lt;/clx-togglebutton&gt;</code></pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="textfield" class="content-section">
-        <div class="header-section">
-          <span class="feature-title">Region</span>
-          <span>The Region is a SVG element with theming and HControl functionality.</span>
-        </div>
-        <div class="main-section" style="display: inline-block;">
-          <div style="margin-bottom:10px;width:140px;height:140px;">
-            <clx-region id="region01">
-            </clx-region>
-          </div>
-          <div  style="width:140px;height:140px;">
-            <clx-region id="region02" mode="edit">
-            </clx-region>
-          </div>
-          <script>
-            var vertexes = [{ x: 5, y: 5 }, { x: 96, y: 5 }, { x: 96, y: 96 }, { x: 5, y: 96 }];
-            const resizeRect = {x: 400, y: 0, width: 100, height: 100};
-
-            const regions = document.querySelectorAll("clx-region");
-
-            regions.forEach(function (region) {
-
-              region.setAttribute("points", JSON.stringify(vertexes));
-              region.setAttribute("resize-rect", JSON.stringify(resizeRect));
-
-            });
-
-            document.querySelector("#regionControl").addEventListener("boundingBox", function(data){
-
-              document.getElementById("region-resize").style.left = data.detail.dimension.x + "px";
-              document.getElementById("region-resize").style.top = data.detail.dimension.y + "px";
-              document.getElementById("region-resize").style.width = (data.detail.dimension.width) + "px";
-              document.getElementById("region-resize").style.height = (data.detail.dimension.height) + "px";
-              
-            });
-
-          </script>
-        </div>
-        <div class="documentation">
-          <h2>Documentation</h2>
-          <div>
-            <h4>Implementation</h4>
-            <pre class="language-markup"><code>&lt;clx-region &gt;&lt;/clx-region&gt;</code></pre>
-            <pre class="language-markup"><code>&lt;clx-region mode="edit" &gt;&lt;/clx-region&gt;</code></pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="image" class="content-section">
-        <div class=" header-section">
-          <span class="feature-title">Image</span>
-          <span>The image is an extension to HTML <code>&lt;img&gt;</code> element that represents a clickable
-            image, which can be used in forms, theming and no HControl functionality.
-          </span>
-        </div>
-
-        <div class="main-section">
-          <div class="row">
-            <clx-img source="assets/images/Harman+Primary+Logo+(Med)_thmb.jpg" alt="Harman Logo">
-            </clx-img>
-          </div>
-        </div>
-        <div class="documentation">
-          <h2>Documentation</h2>
-          <div>
-            <h4>Implementation</h4>
-            <pre
-              class="language-markup"><code>&lt;clx-img source="assets/images/Harman+Primary+Logo+(Med)_thmb.jpg" alt="Harman Logo"&gt;&lt;/clx-img&gt;</code></pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="image" class="content-section">
-        <div class=" header-section">
-          <span class="feature-title">BrowserVersion</span>
-          <span id="browserInfo">
-          </span>
-        </div>
-
       </div>
     </div>
-  </div>
-  </div>
 
 
   </div>
