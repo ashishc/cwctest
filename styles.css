@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css?family=Titillium+Web");
+:root {
+  --theme-color-one: #5CA3DA;
+  --theme-color-two: #42484e;
+  --theme-color-three: #212830;
+  --theme-color-four: #63920b;
+  --theme-color-five: #5CA3DA;
+  --theme-color-six: #42484f;
+  --theme-color-seven: #ffffff;
+  --theme-color-eight: #ffffff;
+  --theme-color-nine: #212830;
+  --theme-color-ten: #e2584d;
+  --theme-font-family: "Titillium Web";
+  --theme-font-size: 1;
+  --theme-border-radius: 3;
+}
+.header-section {
+  background-color: var(--theme-color-two);
+}
+.main-section {
+  background-color: var(--theme-color-three);
+  color: var(--theme-color-seven);
+}
